@@ -1,0 +1,271 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Generator - Template 1</title>
+    <style>
+        /* Add your CSS styles here */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Template 1 Generator (1 week before your session)</h1>
+        <label for="fullName">Your Full Name:</label>
+        <input type="text" id="fullName" required>
+
+        <label for="yearOfStudy">Your Year of Study:</label>
+        <select id="yearOfStudy">
+            <option value="Year 2">Year 2</option>
+            <option value="Year 3">Year 3</option>
+            <option value="Year 4">Year 4</option>
+            <option value="Year 5">Year 5</option>
+            <option value="Year 6">Year 6</option>
+        </select>
+
+        <label for="yearOfPeerLearners">Year of Peer Learners:</label>
+        <select id="yearOfPeerLearners">
+            <option value="Year 1">Year 1</option>
+            <option value="Year 2">Year 2</option>
+        </select>
+
+        <label for="block">Session Block:</label>
+        <select id="block" required>
+            <option value="Block A">Block A</option>
+            <option value="Block B">Block B</option>
+            <option value="Block C">Block C</option>
+            <option value="Block D">Block D</option>
+        </select>
+
+<script>
+    function updateBlockOptions() {
+        const yearOfPeerLearners = document.getElementById('yearOfPeerLearners').value;
+        const blockSelect = document.getElementById('block');
+
+        blockSelect.innerHTML = '';
+
+        if (yearOfPeerLearners === 'Year 1') {
+            addBlockOption('IASM', 'IASM');
+            addBlockOption('CVS', 'CVS');
+            addBlockOption('RES', 'RES');
+            addBlockOption('UG', 'UG');
+            addBlockOption('EOS', 'EOS');
+        } else if (yearOfPeerLearners === 'Year 2') {
+            addBlockOption('GI', 'GI');
+            addBlockOption('MS', 'MS');
+            addBlockOption('NEU', 'NEU');
+            addBlockOption('HN', 'HN');
+            addBlockOption('HI', 'HI');
+            addBlockOption('ER', 'ER');
+            addBlockOption('EOS', 'EOS');
+        }
+
+        function addBlockOption(text, value) {
+            let option = document.createElement('option');
+            option.text = text;
+            option.value = value;
+            blockSelect.add(option);
+        }
+    }
+
+    document.getElementById('yearOfPeerLearners').addEventListener('change', updateBlockOptions);
+    updateBlockOptions();
+</script>
+        <label for="number">Session Number:</label>
+        <input type="number" id="year" min="1" max="10" required>
+
+        <label for="sessionName">Session Name:</label>
+        <input type="text" id="sessionName" required>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" required>
+
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" required>
+
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" required>
+
+        <label for="format">Format (F2F/Zoom/Hybrid):</label>
+        <select id="format" onchange="toggleVenueField()" required>
+            <option value="Face-to-Face" selected>Face-to-Face</option>
+            <option value="Zoom">Zoom</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <label for="venue" id="venueLabel" style="display: none;">Venue:</label>
+        <input type="text" id="venue" style="display: none;">
+<script>
+    function toggleVenueField() {
+        const formatSelect = document.getElementById('format');
+        const venueLabel = document.getElementById('venueLabel');
+        const venueInput = document.getElementById('venue');
+
+        if (formatSelect.value === 'Face-to-Face') {
+            venueLabel.style.display = 'block';
+            venueInput.style.display = 'block';
+        } else {
+            venueLabel.style.display = 'none';
+            venueInput.style.display = 'none';
+        }
+    }
+
+    toggleVenueField();
+</script>
+
+        <label for="relevantLectures">Relevant Lectures/Practicals:</label>
+        <textarea id="relevantLectures" rows="4" required></textarea>
+
+        <label for="learningAims">Learning Aims (min 4):</label>
+        <textarea id="learningAims" rows="4" required></textarea>
+
+        <button onclick="generateTemplate1()">Generate Template</button>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function generateTemplate1() {
+            const block = document.getElementById('block').value.trim().toUpperCase();
+            const year = document.getElementById('year').value;
+            const sessionName = document.getElementById('sessionName').value;
+            const date = new Date(document.getElementById('date').value);
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const yearOfStudy = document.getElementById('yearOfStudy').value;
+            const yearOfPeerLearners = document.getElementById('yearOfPeerLearners').value;
+            const fullName = document.getElementById('fullName').value;
+            const format = document.getElementById('format').value;
+            const venue = document.getElementById('venue').value;
+            const relevantLectures = document.getElementById('relevantLectures').value;
+            const learningAims = document.getElementById('learningAims').value;
+
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const dayOfWeek = days[date.getDay()];
+
+            const start = new Date(`2000-01-01T${startTime}`);
+            const end = new Date(`2000-01-01T${endTime}`);
+            const durationMinutes = (end - start) / (1000 * 60); 
+            const hours = Math.floor(durationMinutes / 60);
+            const minutes = durationMinutes % 60;
+
+            let duration = '';
+
+            if (hours > 0) {
+                duration += hours === 1 ? '1 hour' : `${hours} hours`;
+            }
+
+            if (minutes > 0) {
+                if (hours > 0) {
+                    duration += ' and ';
+                }
+    
+                duration += minutes === 1 ? '1 minute' : `${minutes} minutes`;
+            }
+
+            if (hours === 0 && minutes === 0) {
+                duration = 'Less than a minute';
+}
+
+            console.log(duration);
+
+            let sessionCode = block + year;
+            sessionCode = sessionCode.replace(/\s+/g, '');
+
+            let paragraph = `[${sessionCode}] ${sessionName} - Sign up now!\n\n`;
+            paragraph += `Hi! I am ${fullName} (${yearOfStudy}), and I will be teaching this session.\n\n`;
+            paragraph += `Session code: ${sessionCode}\n`;
+            paragraph += `Date: ${date.toISOString().split('T')[0]} (${dayOfWeek})\n`;
+            paragraph += `Time: ${startTime} - ${endTime} (${duration})\n`;
+            paragraph += `Format: ${format}\n`;
+
+            if (format === 'Hybrid' || format === 'Face-to-Face') {
+                paragraph += `Venue: ${venue}\n`;
+            }
+
+            if (format !== 'Face-to-Face') {
+                paragraph += `Zoom link: <a href="${getZoomLink(yearOfPeerLearners)}">${getZoomLink(yearOfPeerLearners)}</a>\n`;
+            }
+
+
+            paragraph += `Sign up now via: <a href="https://docs.google.com/forms/d/e/1FAIpQLSeHW60_dHtDyEH56gnRC1wDpX8H6ylguRTsvWk-sVDcyfU1GQ/viewform?usp=pp_url">https://docs.google.com/forms/d/e/1FAIpQLSeHW60_dHtDyEH56gnRC1wDpX8H6ylguRTsvWk-sVDcyfU1GQ/viewform?usp=pp_url</a>\n\n`;
+            paragraph += `Relevant lectures/practicals:\n${relevantLectures}\n\n`;
+            paragraph += `Learning aims (min 4):\n${learningAims}\n\n`;
+            paragraph += `See you then!`;
+
+            document.getElementById('output').innerHTML = paragraph;
+        }
+
+        function toggleVenueField() {
+            const format = document.getElementById('format').value;
+            const venueLabel = document.getElementById('venueLabel');
+            const venueInput = document.getElementById('venue');
+
+            if (format === 'Hybrid' || format === 'Face-to-Face') {
+                venueLabel.style.display = 'block';
+                venueInput.style.display = 'block';
+            } else {
+                venueLabel.style.display = 'none';
+                venueInput.style.display = 'none';
+            }
+        }
+
+        function getZoomLink(yearOfPeerLearners) {
+            if (yearOfPeerLearners === 'Year 1') {
+                return 'https://hku.zoom.us/j/98375133764'; // Year 1 Zoom Link
+            } else if (yearOfPeerLearners === 'Year 2') {
+                return 'https://hku.zoom.us/j/98695209776'; // Year 2 Zoom Link
+            }
+            return '';
+        }
+    </script>
+</body>
+
+</html>
